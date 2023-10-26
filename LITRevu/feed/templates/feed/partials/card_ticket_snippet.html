@@ -1,0 +1,27 @@
+{% load static %}
+
+<h4 class="text_a_la_ligne">A propos de ce livre:</h4>
+<div class="container_show_feed">
+    <div class="sous_show_feed">
+        <div class="cadre_photo">
+            {% if ticket.image %}
+                <img class="photo" src="{{ ticket.image.url }}">
+            {% else %}
+                <img class="photo" src="{% static 'img/default_profile.png' %}">
+            {% endif %}
+        </div>
+        <div class="cadre_text">
+            <h3>{{ ticket.title }}</h3><h5> -De: {{ ticket.user }}</h5>
+        </div>
+    </div>
+    <div class="cadre_description">
+        {% if ticket.description|length > 0 %}
+            <h5 class="">Description :</h5>
+            <p class="">
+                {{ ticket.description }}
+            </p>
+        {% endif %}
+    </div>
+</div>
+
+<h4 class="text_a_la_ligne">Ma critique:</h4>

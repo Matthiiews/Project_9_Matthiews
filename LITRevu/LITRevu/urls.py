@@ -17,6 +17,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+
+from authentication.views import LoginPage, SignupForm, logout_user
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    # Authentication App related
+    path('', LoginPage.as_view(), name='login'),
+    path('signup/', SignupForm.as_view(), name='signup'),
+    path('logout/', logout_user, name='logout'),
 ]

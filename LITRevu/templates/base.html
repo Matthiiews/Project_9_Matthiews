@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LITRevu</title>
+</head>
+<body>
+    <header>
+        <div class="header__rigth">
+            {% if user.is_authenticated %}
+                <p><a href="{% url 'feed' %}">Mon flux</a></p>
+                <p><a href="{% url 'posts' %}">Posts</a></p>
+                <p><a href="{% url 'abo' %}">Abonnements</a></p>
+                <p><a href="{% url 'logout' %}">Se déconnecter</a></p>
+            {% endif %}
+        </div>
+        <a href="{% if user.is_authenticated %}{% url 'feed' %}{% else %}{% url 'login' %}{% endif %}">
+            <div class="header__center">
+                <!-- Utilisation du tag static pour inclure un fichier CSS -->
+                <img class="logo" src="{% static 'img/logo_black.png' %}">
+                <h1>LITRevu</h1>
+            </div>
+        </a>
+    </header>
+    <div class="container">
+        {% block content %}{% endblock content %}
+    </div>
+    
+</body>
+</html>
