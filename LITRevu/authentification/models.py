@@ -4,17 +4,21 @@ from django.utils.translation import gettext_lazy as _
 
 
 class User(AbstractUser):
-    """Create USer instance"""
+    """Classe représentant un utilisateur personnalisé héritant
+    de la classe AbstractUser
+    """
 
 
 class UserFollows(models.Model):
-    """Follow and followed by model"""
+    """Modèle pour gérer les relations de suivi entre utilisateurs."""
 
+    # Utilisateur qui effectue le suivi
     user = models.ForeignKey("authentification.User",
                              on_delete=models.CASCADE,
                              related_name='following',
                              verbose_name=_("user"))
 
+    # Utilisateur suivi
     followed_user = models.ForeignKey("authentification.User",
                                       on_delete=models.CASCADE,
                                       related_name='flolowed_by',

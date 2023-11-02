@@ -23,8 +23,8 @@ def signup_page_view(request):
     else:
         form = SignupForm()
 
-    return render(request, "register/register_page.html",
-                  context={"form": form})
+    return render(request, "register/register_page.html", context={
+        "form": form})
 
 
 def login_page_view(request):
@@ -59,12 +59,11 @@ def logout_page_view(request):
     return redirect("authentification:login")
 
 
-# abo page
+# Page d'abonnement
 @login_required
 def abo_page_view(request, user):
     """abo page, with follow and unfollow logic, see which users is following
-    request.user
-    """
+    request.user"""
     search_form = SearchUser()
     searched_user_resp = ""
     requested_user = User.objects.get(username=user)
@@ -72,12 +71,13 @@ def abo_page_view(request, user):
     searched_user_resp_btn = ''
 
     if request.method == "POST":
+
         flwUserBtn = FollowUserButton(request.POST)
 
         if "follow" in request.POST:
             if flwUserBtn.is_valid():
-                to_be_followed_user = flwUserBtn.cleaned_data
-                ["searched_to_follow"]
+                to_be_followed_user = flwUserBtn.cleaned_data[
+                    "searched_to_follow"]
                 try:
                     user_to_follow = User.objects.get(
                         username=to_be_followed_user)
@@ -121,26 +121,18 @@ def abo_page_view(request, user):
                         "User does not exist. Please choose another name."
                     )
 
-    # else:
-        # form = AboForm(user=request.user)
-
-    # get data out of database for the context
     followed_users = request.user.following.all()
     followed_by_others = UserFollows.objects.filter(followed_user=request.user)
 
     users = (
-        User.objects.filter(
-            is_superuser=False,
-        )
-        .exclude(
-            id__in=request.user.following.values_list(
+        User.objects.filter(is_superuser=False)
+        .exclude(id__in=request.user.following.values_list(
                 "followed_user_id", flat=True)
         )
         .exclude(id=request.user.id)
     )
 
     context = {
-        # "form": form,
         "users": users,
         'search_form': search_form,
         'searched_user_resp': searched_user_resp,

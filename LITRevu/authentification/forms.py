@@ -5,7 +5,7 @@ from .models import User
 
 
 class SignupForm(UserCreationForm):
-    """form to register"""
+    """Formulaire d'inscription."""
 
     class Meta(UserCreationForm.Meta):
         model = User
@@ -13,14 +13,16 @@ class SignupForm(UserCreationForm):
 
 
 class LoginForm(forms.Form):
-    """login form to user interphase"""
+    """Formulaire de connexion pour l'interface utilisateur."""
 
     username = forms.CharField(max_length=50)
     password = forms.CharField(max_length=50, widget=forms.PasswordInput)
 
 
 class AboForm(forms.Form):
-    """form for the abonnement page, to follow and unfollow users"""
+    """Formulaire pour la page d'abonnement, permettant de suivre et de ne
+    plus suivre les utilisateurs.
+    """
 
     search = forms.CharField(max_length=50, label=False)
 
@@ -31,14 +33,14 @@ class AboForm(forms.Form):
     def clean_search(self):
         search = self.cleaned_data["search"]
 
-        # impossible to follow yourself:
+        # Impossible de se suivre soi même :
         if self.user and self.user.username == search:
-            # replaced with messages in view
+            # Remplacé par des messages dans le vue
             raise forms.ValidationError("You can not follow yourself!")
 
-        # impossible to follow an admin/superuser:
+        # Impossible de suivre un admin/superutilisateur :
         if User.objects.filter(username=search, is_superuser=True).exists():
-            # replaced with messages in view
+            # Remplacé par des messages dans la vue
             raise forms.ValidationError(
                 "Please choose an other name to follow!")
 

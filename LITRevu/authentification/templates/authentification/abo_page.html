@@ -2,13 +2,15 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<!-- abonnement page -->
+<!-- Page d'abonnement -->
 <div class="container main">
   <div class="container justify-content-center">
     <div class="" style="margin-bottom: 30px;">
         {% if request.user.username == requested_user.username %}
-          <h3 style="width:100%; text-align:center;" >Suivre d'autres utilisateurs</h3>
+          <!-- Titre si l'utilisateur courant est le même que l'utilisateur recherché -->
+          <h3 style="width:100%; text-align:center;">Suivre d'autres utilisateurs</h3>
           <div class="form__search">
+              <!-- Formulaire de recherche -->
               <form class="lined__up__form" method="post">
                   {{ search_form.as_p }}
                     {% csrf_token %}
@@ -16,23 +18,24 @@
               </form>
           </div>
           {% if searched_user_resp %}
+              <!-- Affiche les détails de l'utilisateur recherché -->
               <div class="user-follower__user">
                   <div class="user-follower">
                       <p>                       
-                          <strong>{{searched_user_resp.username }}</strong>                        
+                          <strong>{{ searched_user_resp.username }}</strong>                        
                       </p>
                   </div>
                   <div class="user-follower">
                       <form method="post">
                           {{ searched_user_btn.as_p }}
                           {% csrf_token %}
-                          <input class="btn  btn-success btnfitted_to_label" type="submit" name="follow" value="S'abonner">                          
+                          <input class="btn  btn-success btnfitted_to_label" type="submit" 
+                          name="follow" value="S'abonner">                          
                       </form>
                   </div>
               </div>
           {% endif %}
         {% endif %}
-
 
     </div>
 
@@ -40,18 +43,18 @@
     <div style="margin-bottom: 30px;">
       <form method="post">
       {% csrf_token %}
-        <h4> {{ request.user }} is following: </h4>
+        <!-- Liste des utilisateurs suivis par l'utilisateur courant -->
+        <h4> {{ request.user }} is following :</h4>
         {% for followed_user in followed_users %}
         <table class="table ">
           <tbody>
             <tr>
               <td class="spacing__div"> 
-                
-                
+                <!-- Détails de l'utilisateur suivi -->
                   <span>{{ followed_user.followed_user.username }} </span>
-                  <button type="submit" class="btn btn-warning btn-sm btnfitted_to_label pull__to__right" name="unfollow" value="{{ followed_user.followed_user.id }}" style="margin: 3px"> Se Désabonner </button>
-            
-                  
+                  <button type="submit" class="btn btn-warning btn-sm btnfitted_to_label 
+                  pull__to__right" name="unfollow" value="{{ followed_user.followed_user.id }}" 
+                  style="margin: 3px"> Se Désabonner </button>
               </td>
             </tr>
           </tbody>
@@ -65,6 +68,7 @@
     <div>
       <form method="post">
       {% csrf_token %}
+        <!-- Liste des utilisateurs qui suivent l'utilisateur courant -->
         <h4> You are being followed by: </h4>
         {% for user in followed_by_others %}
           <table class="table ">
@@ -81,5 +85,5 @@
 
   </div>
 </div>
-<!-- End of abo page -->
+<!-- Fin de la page d'abonnement -->
 {% endblock %}
