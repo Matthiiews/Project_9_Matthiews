@@ -10,7 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import os.path
+
 from pathlib import Path
+from django.contrib.messages import constants as messages
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -41,8 +44,12 @@ INSTALLED_APPS = [
     'authentification',
     'review',
     'utilities',
-    
+    'crispy_forms',
+    'crispy_bootstrap4',
+    'django_extensions',
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -60,7 +67,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            BASE_DIR.joinpath('templates'),
+            os.path.join(BASE_DIR, 'templates')
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -120,7 +127,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
-STATICFILES_DIRS = [BASE_DIR.joinpath('static')]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'utilities/static')]
+STATIC_ROOT = os.path.join(BASE_DIR, 'utilities/staticfiles')
+
+# Base url to save media files
+MEDIA_URL = '/media/'
+
+# Path where media is stored
+MEDIA_ROOT = os.path.join(BASE_DIR, 'utilities/media/')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -131,3 +145,13 @@ AUTH_USER_MODEL = 'authentification.User'
 
 LOGIN_URL = 'authentification:login'
 LOGIN_REDIRECT_URL = 'review:fields_page'
+
+
+# For django messages framwork:
+MESSAGE_TAGS = {
+    messages.DEBUG: 'alert-secondary',
+    messages.INFO: 'alert-info',
+    messages.SUCCESS: 'alert-success',
+    messages.WARNING: 'alert-warning',
+    messages.ERROR: 'alert-danger'
+}
