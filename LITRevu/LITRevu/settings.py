@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -37,8 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'authentication',
-    'feed',
+    'authentification',
+    'review',
+    'utilities',
+    
 ]
 
 MIDDLEWARE = [
@@ -90,16 +93,13 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {
+            'min_length': 8,
+        },
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME': 'authentification.validators.ContainsLetterValidator',
     },
 ]
 
@@ -127,6 +127,7 @@ STATICFILES_DIRS = [BASE_DIR.joinpath('static')]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'posts'
-LOGOUT_REDIRECT_URL = 'LOGIN_URL'
+AUTH_USER_MODEL = 'authentification.User'
+
+LOGIN_URL = 'authentification:login'
+LOGIN_REDIRECT_URL = 'review:fields_page'

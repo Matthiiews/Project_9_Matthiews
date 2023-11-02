@@ -12,7 +12,7 @@
             {% if user.is_authenticated %}
                 <p><a href="{% url 'feed' %}">Mon flux</a></p>
                 <p><a href="{% url 'posts' %}">Posts</a></p>
-                <p><a href="{% url 'abo' %}">Abonnements</a></p>
+                <p><a href="{% url 'abonnements' %}">Abonnements</a></p>
                 <p><a href="{% url 'logout' %}">Se déconnecter</a></p>
             {% endif %}
         </div>

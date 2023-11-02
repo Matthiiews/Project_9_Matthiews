@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<!-- Home page: register and login -->
+    <div class="container main">
+        <div class="row justify-content-center" style="z-index: 0;">
+            <div class="col-md-6 d-flex justify-content-center" style="z-index: 0;">
+                <div class="card  my-3 col-6 login__card" style="z-index: 0;">
+                    <div class="card-body bg-transparent px-4">
+                        <h4 class="card-subtitle text-center py-2"> Log In :</h4>
+                        <form method="post">
+                            {% csrf_token %}
+                             {{ form|crispy }}
+                            <div>
+                                <button type="submit" class="btn btn-sm btn-primary margin-btn">Se connecter</button>
+                            </div>
+                        </form>
+                        <p>{{ message }}</p>
+                        <p>Pas encore membre ? <a href="{% url 'authentification:register' %}"></a></p>
+                    </div>
+                </div>
+
+                <div class="divider__area">
+                    <h4 class="card-subtitle text-center py-2">Ou</h4>
+                </div>
+
+                <div class="card my-3 col-6 login__card" style="z-index: 0;">
+                    <div class="card-body bg-transparent text-center align-items-center">
+                        <h4 class="card-subtitle py-2">Inscrivez-vous maintenant :</h4>
+                        <a class="btn btn-sm btn-primary margin-btn" 
+                        href="{% url 'authentification:register' %}" role="button">S'inscrire</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- End of home page -->
+{% endblock content %}

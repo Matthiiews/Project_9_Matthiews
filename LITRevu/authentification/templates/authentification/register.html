@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<!-- register page -->
+    <div class="container main">
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+                <div class="card my-3 login__card" style="">
+                    <div class="card-body bg-transparent">
+                        <h4 class="card-subtitle text-center py-2">Inscrivez-vous maintenant :</h4>
+                        <form method="post">
+                            {% csrf_token %}
+                                {{ form|crispy }}
+                            <div style="display: flex; justify-content: space-between;">
+                                <button type="submit" class="btn btn-sm btn-primary margin-btn">S'incrire</button>
+                                <a href="{% url 'authentification:login' %}" role="button" class="btn btn-sm
+                                btn-secondary margin-btn">Annuler</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- End of register page -->
+{% endblock content %}
